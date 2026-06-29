@@ -1,29 +1,45 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/site/Nav";
+import { Hero } from "@/components/site/Hero";
+import { Stats } from "@/components/site/Stats";
+import { Modules } from "@/components/site/Modules";
+import { AiSection } from "@/components/site/AiSection";
+import { Pricing } from "@/components/site/Pricing";
+import { CTA } from "@/components/site/CTA";
+import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "OFM OS — L'OS des agences OnlyFans au million" },
+      {
+        name: "description",
+        content:
+          "La plateforme tout-en-un pour lancer, gérer et scaler une agence OFM. CRM, finance, IA, recrutement et automatisations.",
+      },
+      { property: "og:title", content: "OFM OS — L'OS des agences OnlyFans" },
+      {
+        property: "og:description",
+        content: "Lancez et scalez votre agence OFM au million avec l'IA et l'automatisation.",
+      },
     ],
   }),
-  component: Index,
+  component: LandingPage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function LandingPage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="relative min-h-screen bg-background text-foreground overflow-x-clip">
+      <Nav />
+      <Hero />
+      <Stats />
+      <div id="platform" />
+      <Modules />
+      <AiSection />
+      <div id="academy" />
+      <Pricing />
+      <CTA />
+      <Footer />
+    </main>
   );
 }

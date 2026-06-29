@@ -1,5 +1,7 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { Logo } from "@/components/site/Logo";
+import { supabase } from "@/integrations/supabase/client";
 
 const groups = [
   {
@@ -41,6 +43,16 @@ const groups = [
 
 export function Sidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
+
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-sidebar-border bg-sidebar h-screen sticky top-0">
       <div className="p-5 border-b border-sidebar-border">
@@ -79,7 +91,7 @@ export function Sidebar() {
           </div>
         ))}
       </nav>
-      <div className="p-3 border-t border-sidebar-border">
+      <div className="p-3 border-t border-sidebar-border space-y-3">
         <div className="rounded-xl border-gradient p-4">
           <div className="text-xs font-semibold">Passez à Agency</div>
           <p className="mt-1 text-[11px] text-muted-foreground">
@@ -89,6 +101,12 @@ export function Sidebar() {
             Upgrade
           </button>
         </div>
+        <button
+          onClick={signOut}
+          className="w-full rounded-lg border border-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-white/5 transition"
+        >
+          Se déconnecter
+        </button>
       </div>
     </aside>
   );

@@ -41,6 +41,33 @@ export type Database = {
         }
         Relationships: []
       }
+      role_change_logs: {
+        Row: {
+          action: Database["public"]["Enums"]["role_change_action"]
+          changed_by: string | null
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          target_user_id: string
+        }
+        Insert: {
+          action: Database["public"]["Enums"]["role_change_action"]
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          target_user_id: string
+        }
+        Update: {
+          action?: Database["public"]["Enums"]["role_change_action"]
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          target_user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -77,6 +104,7 @@ export type Database = {
     }
     Enums: {
       app_role: "founder" | "manager" | "chatter"
+      role_change_action: "granted" | "revoked"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -205,6 +233,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["founder", "manager", "chatter"],
+      role_change_action: ["granted", "revoked"],
     },
   },
 } as const

@@ -39,6 +39,12 @@ const groups = [
       { to: "/dashboard", label: "Académie", icon: "✺" },
     ],
   },
+  {
+    label: "Administration",
+    items: [
+      { to: "/admin/roles", label: "Rôles & permissions", icon: "⚿" },
+    ],
+  },
 ];
 
 export function Sidebar() {

@@ -15,10 +15,10 @@ const groups = [
   {
     label: "Opérations",
     items: [
-      { to: "/dashboard", label: "Modèles", icon: "★" },
+      { to: "/models", label: "Modèles", icon: "★" },
+      { to: "/models", label: "CRM Fans", icon: "◈" },
       { to: "/dashboard", label: "Chatters", icon: "◐" },
       { to: "/dashboard", label: "Managers", icon: "◆" },
-      { to: "/dashboard", label: "CRM", icon: "◈" },
     ],
   },
   {

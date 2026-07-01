@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedModelsRouteImport } from './routes/_authenticated/models'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedModelsModelIdRouteImport } from './routes/_authenticated/models.$modelId'
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 
 const AuthRoute = AuthRouteImport.update({
@@ -29,11 +31,22 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedModelsRoute = AuthenticatedModelsRouteImport.update({
+  id: '/models',
+  path: '/models',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedModelsModelIdRoute =
+  AuthenticatedModelsModelIdRouteImport.update({
+    id: '/$modelId',
+    path: '/$modelId',
+    getParentRoute: () => AuthenticatedModelsRoute,
+  } as any)
 const AuthenticatedAdminRolesRoute = AuthenticatedAdminRolesRouteImport.update({
   id: '/admin/roles',
   path: '/admin/roles',
@@ -44,13 +57,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/models': typeof AuthenticatedModelsRouteWithChildren
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/models/$modelId': typeof AuthenticatedModelsModelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/models': typeof AuthenticatedModelsRouteWithChildren
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/models/$modelId': typeof AuthenticatedModelsModelIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -58,20 +75,36 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/models': typeof AuthenticatedModelsRouteWithChildren
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/_authenticated/models/$modelId': typeof AuthenticatedModelsModelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/admin/roles'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/models'
+    | '/admin/roles'
+    | '/models/$modelId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/admin/roles'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/models'
+    | '/admin/roles'
+    | '/models/$modelId'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/models'
     | '/_authenticated/admin/roles'
+    | '/_authenticated/models/$modelId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -103,12 +136,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/models': {
+      id: '/_authenticated/models'
+      path: '/models'
+      fullPath: '/models'
+      preLoaderRoute: typeof AuthenticatedModelsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/models/$modelId': {
+      id: '/_authenticated/models/$modelId'
+      path: '/$modelId'
+      fullPath: '/models/$modelId'
+      preLoaderRoute: typeof AuthenticatedModelsModelIdRouteImport
+      parentRoute: typeof AuthenticatedModelsRoute
     }
     '/_authenticated/admin/roles': {
       id: '/_authenticated/admin/roles'
@@ -120,13 +167,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedModelsRouteChildren {
+  AuthenticatedModelsModelIdRoute: typeof AuthenticatedModelsModelIdRoute
+}
+
+const AuthenticatedModelsRouteChildren: AuthenticatedModelsRouteChildren = {
+  AuthenticatedModelsModelIdRoute: AuthenticatedModelsModelIdRoute,
+}
+
+const AuthenticatedModelsRouteWithChildren =
+  AuthenticatedModelsRoute._addFileChildren(AuthenticatedModelsRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedModelsRoute: typeof AuthenticatedModelsRouteWithChildren
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedModelsRoute: AuthenticatedModelsRouteWithChildren,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
 }
 

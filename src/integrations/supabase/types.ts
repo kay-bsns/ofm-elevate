@@ -14,6 +14,182 @@ export type Database = {
   }
   public: {
     Tables: {
+      fans: {
+        Row: {
+          ai_persona: Json | null
+          ai_summary: string | null
+          avatar_url: string | null
+          country: string | null
+          created_at: string
+          display_name: string | null
+          handle: string
+          id: string
+          language: string | null
+          last_message_at: string | null
+          last_purchase_at: string | null
+          lifetime_value: number
+          model_id: string
+          owner_id: string
+          status: Database["public"]["Enums"]["fan_status"]
+          subscribed_at: string | null
+          tags: string[]
+          updated_at: string
+        }
+        Insert: {
+          ai_persona?: Json | null
+          ai_summary?: string | null
+          avatar_url?: string | null
+          country?: string | null
+          created_at?: string
+          display_name?: string | null
+          handle: string
+          id?: string
+          language?: string | null
+          last_message_at?: string | null
+          last_purchase_at?: string | null
+          lifetime_value?: number
+          model_id: string
+          owner_id: string
+          status?: Database["public"]["Enums"]["fan_status"]
+          subscribed_at?: string | null
+          tags?: string[]
+          updated_at?: string
+        }
+        Update: {
+          ai_persona?: Json | null
+          ai_summary?: string | null
+          avatar_url?: string | null
+          country?: string | null
+          created_at?: string
+          display_name?: string | null
+          handle?: string
+          id?: string
+          language?: string | null
+          last_message_at?: string | null
+          last_purchase_at?: string | null
+          lifetime_value?: number
+          model_id?: string
+          owner_id?: string
+          status?: Database["public"]["Enums"]["fan_status"]
+          subscribed_at?: string | null
+          tags?: string[]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fans_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "models"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interactions: {
+        Row: {
+          amount: number | null
+          content: string | null
+          created_at: string
+          fan_id: string
+          id: string
+          kind: Database["public"]["Enums"]["interaction_kind"]
+          metadata: Json | null
+          model_id: string
+          occurred_at: string
+          owner_id: string
+        }
+        Insert: {
+          amount?: number | null
+          content?: string | null
+          created_at?: string
+          fan_id: string
+          id?: string
+          kind: Database["public"]["Enums"]["interaction_kind"]
+          metadata?: Json | null
+          model_id: string
+          occurred_at?: string
+          owner_id: string
+        }
+        Update: {
+          amount?: number | null
+          content?: string | null
+          created_at?: string
+          fan_id?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["interaction_kind"]
+          metadata?: Json | null
+          model_id?: string
+          occurred_at?: string
+          owner_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interactions_fan_id_fkey"
+            columns: ["fan_id"]
+            isOneToOne: false
+            referencedRelation: "fans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interactions_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "models"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      models: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          commission_rate: number
+          created_at: string
+          id: string
+          monthly_goal: number | null
+          niche: string | null
+          onlyfans_url: string | null
+          owner_id: string
+          real_name: string | null
+          stage_name: string
+          status: Database["public"]["Enums"]["model_status"]
+          timezone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          commission_rate?: number
+          created_at?: string
+          id?: string
+          monthly_goal?: number | null
+          niche?: string | null
+          onlyfans_url?: string | null
+          owner_id: string
+          real_name?: string | null
+          stage_name: string
+          status?: Database["public"]["Enums"]["model_status"]
+          timezone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          commission_rate?: number
+          created_at?: string
+          id?: string
+          monthly_goal?: number | null
+          niche?: string | null
+          onlyfans_url?: string | null
+          owner_id?: string
+          real_name?: string | null
+          stage_name?: string
+          status?: Database["public"]["Enums"]["model_status"]
+          timezone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -104,6 +280,17 @@ export type Database = {
     }
     Enums: {
       app_role: "founder" | "manager" | "chatter"
+      fan_status: "lead" | "active" | "vip" | "whale" | "churned"
+      interaction_kind:
+        | "message_in"
+        | "message_out"
+        | "ppv_sent"
+        | "ppv_purchased"
+        | "tip"
+        | "subscription"
+        | "call"
+        | "note"
+      model_status: "onboarding" | "active" | "paused" | "archived"
       role_change_action: "granted" | "revoked"
     }
     CompositeTypes: {
@@ -233,6 +420,18 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["founder", "manager", "chatter"],
+      fan_status: ["lead", "active", "vip", "whale", "churned"],
+      interaction_kind: [
+        "message_in",
+        "message_out",
+        "ppv_sent",
+        "ppv_purchased",
+        "tip",
+        "subscription",
+        "call",
+        "note",
+      ],
+      model_status: ["onboarding", "active", "paused", "archived"],
       role_change_action: ["granted", "revoked"],
     },
   },

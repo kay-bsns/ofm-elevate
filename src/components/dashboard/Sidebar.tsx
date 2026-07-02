@@ -16,7 +16,7 @@ const groups = [
     label: "Opérations",
     items: [
       { to: "/models", label: "Modèles", icon: "★" },
-      { to: "/models", label: "CRM Fans", icon: "◈" },
+      { to: "/crm", label: "CRM Fans", icon: "◈" },
       { to: "/dashboard", label: "Chatters", icon: "◐" },
       { to: "/dashboard", label: "Managers", icon: "◆" },
     ],

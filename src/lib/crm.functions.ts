@@ -238,3 +238,62 @@ ${timeline || "(aucun)"}
     await context.supabase.from("fans").update({ ai_summary: text }).eq("id", data.fan_id);
     return { summary: text };
   });
+
+// ---------- CRM Dashboard KPIs ----------
+export const crmDashboard = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data: fans, error: fErr } = await context.supabase
+      .from("fans")
+      .select("id, handle, display_name, status, lifetime_value, last_message_at, last_purchase_at, model_id, models(stage_name)");
+    if (fErr) throw new Error(fErr.message);
+
+    const since = new Date(Date.now() - 30 * 86400000).toISOString();
+    const { data: recentInteractions } = await context.supabase
+      .from("interactions")
+      .select("amount, kind, occurred_at")
+      .gte("occurred_at", since);
+
+    const list = fans ?? [];
+    const totalRevenue = list.reduce((s, f) => s + Number(f.lifetime_value ?? 0), 0);
+    const activeStatuses = new Set(["active", "vip", "whale"]);
+    const activeFans = list.filter((f) => activeStatuses.has(f.status)).length;
+    const paying = list.filter((f) => Number(f.lifetime_value) > 0).length;
+    const conversionRate = list.length > 0 ? (paying / list.length) * 100 : 0;
+    const avgLtv = paying > 0 ? totalRevenue / paying : 0;
+
+    const byStatus: Record<string, { count: number; ltv: number }> = {
+      lead: { count: 0, ltv: 0 }, active: { count: 0, ltv: 0 }, vip: { count: 0, ltv: 0 },
+      whale: { count: 0, ltv: 0 }, churned: { count: 0, ltv: 0 },
+    };
+    for (const f of list) {
+      const b = byStatus[f.status] ?? (byStatus[f.status] = { count: 0, ltv: 0 });
+      b.count += 1; b.ltv += Number(f.lifetime_value ?? 0);
+    }
+
+    const topFans = [...list].sort((a, b) => Number(b.lifetime_value) - Number(a.lifetime_value)).slice(0, 10);
+
+    // 30-day revenue trend (daily buckets)
+    const days = 30;
+    const buckets: { date: string; revenue: number }[] = [];
+    const base = new Date(); base.setHours(0, 0, 0, 0);
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(base.getTime() - i * 86400000);
+      buckets.push({ date: d.toISOString().slice(5, 10), revenue: 0 });
+    }
+    for (const it of recentInteractions ?? []) {
+      if (!it.amount) continue;
+      if (!["ppv_purchased", "tip", "subscription"].includes(it.kind)) continue;
+      const d = new Date(it.occurred_at); d.setHours(0, 0, 0, 0);
+      const idx = days - 1 - Math.floor((base.getTime() - d.getTime()) / 86400000);
+      if (idx >= 0 && idx < days) buckets[idx].revenue += Number(it.amount);
+    }
+
+    return {
+      totals: {
+        totalRevenue, avgLtv, activeFans, conversionRate,
+        totalFans: list.length,
+      },
+      byStatus, topFans, trend: buckets,
+    };
+  });

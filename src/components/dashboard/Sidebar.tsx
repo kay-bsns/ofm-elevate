@@ -8,8 +8,8 @@ const groups = [
     label: "Workspace",
     items: [
       { to: "/dashboard", label: "Overview", icon: "◉" },
-      { to: "/dashboard", label: "Inbox", icon: "✉", badge: 8 },
-      { to: "/dashboard", label: "Calendrier", icon: "◷" },
+      { to: "/inbox", label: "Inbox", icon: "✉", badge: 8 },
+      { to: "/calendar", label: "Calendrier", icon: "◷" },
     ],
   },
   {
@@ -17,26 +17,26 @@ const groups = [
     items: [
       { to: "/models", label: "Modèles", icon: "★" },
       { to: "/crm", label: "CRM Fans", icon: "◈" },
-      { to: "/dashboard", label: "Chatters", icon: "◐" },
-      { to: "/dashboard", label: "Managers", icon: "◆" },
+      { to: "/chatters", label: "Chatters", icon: "◐" },
+      { to: "/managers", label: "Managers", icon: "◆" },
     ],
   },
   {
     label: "Business",
     items: [
-      { to: "/dashboard", label: "Finance", icon: "$" },
-      { to: "/dashboard", label: "Commissions", icon: "%" },
-      { to: "/dashboard", label: "Contrats", icon: "❖" },
-      { to: "/dashboard", label: "Analytics", icon: "◎" },
+      { to: "/finance", label: "Finance", icon: "$" },
+      { to: "/commissions", label: "Commissions", icon: "%" },
+      { to: "/contracts", label: "Contrats", icon: "❖" },
+      { to: "/analytics", label: "Analytics", icon: "◎" },
     ],
   },
   {
     label: "Croissance",
     items: [
-      { to: "/dashboard", label: "Recrutement", icon: "◇" },
-      { to: "/dashboard", label: "Copilot IA", icon: "✦" },
-      { to: "/dashboard", label: "Automatisations", icon: "⌘" },
-      { to: "/dashboard", label: "Académie", icon: "✺" },
+      { to: "/recruitment", label: "Recrutement", icon: "◇" },
+      { to: "/copilot", label: "Copilot IA", icon: "✦" },
+      { to: "/automations", label: "Automatisations", icon: "⌘" },
+      { to: "/academy", label: "Académie", icon: "✺" },
     ],
   },
   {
@@ -45,7 +45,7 @@ const groups = [
       { to: "/admin/roles", label: "Rôles & permissions", icon: "⚿" },
     ],
   },
-];
+] as const;
 
 export function Sidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -71,8 +71,8 @@ export function Sidebar() {
               {g.label}
             </div>
             <div className="space-y-0.5">
-              {g.items.map((it, i) => {
-                const active = pathname === it.to && g.label === "Workspace" && i === 0;
+              {g.items.map((it) => {
+                const active = pathname === it.to || pathname.startsWith(it.to + "/");
                 return (
                   <Link
                     key={g.label + it.label}

@@ -12,9 +12,21 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRecruitmentRouteImport } from './routes/_authenticated/recruitment'
 import { Route as AuthenticatedModelsRouteImport } from './routes/_authenticated/models'
+import { Route as AuthenticatedManagersRouteImport } from './routes/_authenticated/managers'
+import { Route as AuthenticatedInboxRouteImport } from './routes/_authenticated/inbox'
+import { Route as AuthenticatedFinanceRouteImport } from './routes/_authenticated/finance'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCrmRouteImport } from './routes/_authenticated/crm'
+import { Route as AuthenticatedCopilotRouteImport } from './routes/_authenticated/copilot'
+import { Route as AuthenticatedContractsRouteImport } from './routes/_authenticated/contracts'
+import { Route as AuthenticatedCommissionsRouteImport } from './routes/_authenticated/commissions'
+import { Route as AuthenticatedChattersRouteImport } from './routes/_authenticated/chatters'
+import { Route as AuthenticatedCalendarRouteImport } from './routes/_authenticated/calendar'
+import { Route as AuthenticatedAutomationsRouteImport } from './routes/_authenticated/automations'
+import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
+import { Route as AuthenticatedAcademyRouteImport } from './routes/_authenticated/academy'
 import { Route as AuthenticatedModelsModelIdRouteImport } from './routes/_authenticated/models.$modelId'
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 
@@ -32,9 +44,30 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRecruitmentRoute =
+  AuthenticatedRecruitmentRouteImport.update({
+    id: '/recruitment',
+    path: '/recruitment',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedModelsRoute = AuthenticatedModelsRouteImport.update({
   id: '/models',
   path: '/models',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedManagersRoute = AuthenticatedManagersRouteImport.update({
+  id: '/managers',
+  path: '/managers',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInboxRoute = AuthenticatedInboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFinanceRoute = AuthenticatedFinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -45,6 +78,48 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 const AuthenticatedCrmRoute = AuthenticatedCrmRouteImport.update({
   id: '/crm',
   path: '/crm',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCopilotRoute = AuthenticatedCopilotRouteImport.update({
+  id: '/copilot',
+  path: '/copilot',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedContractsRoute = AuthenticatedContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCommissionsRoute =
+  AuthenticatedCommissionsRouteImport.update({
+    id: '/commissions',
+    path: '/commissions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedChattersRoute = AuthenticatedChattersRouteImport.update({
+  id: '/chatters',
+  path: '/chatters',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCalendarRoute = AuthenticatedCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAutomationsRoute =
+  AuthenticatedAutomationsRouteImport.update({
+    id: '/automations',
+    path: '/automations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAcademyRoute = AuthenticatedAcademyRouteImport.update({
+  id: '/academy',
+  path: '/academy',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedModelsModelIdRoute =
@@ -62,18 +137,42 @@ const AuthenticatedAdminRolesRoute = AuthenticatedAdminRolesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/academy': typeof AuthenticatedAcademyRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/automations': typeof AuthenticatedAutomationsRoute
+  '/calendar': typeof AuthenticatedCalendarRoute
+  '/chatters': typeof AuthenticatedChattersRoute
+  '/commissions': typeof AuthenticatedCommissionsRoute
+  '/contracts': typeof AuthenticatedContractsRoute
+  '/copilot': typeof AuthenticatedCopilotRoute
   '/crm': typeof AuthenticatedCrmRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/finance': typeof AuthenticatedFinanceRoute
+  '/inbox': typeof AuthenticatedInboxRoute
+  '/managers': typeof AuthenticatedManagersRoute
   '/models': typeof AuthenticatedModelsRouteWithChildren
+  '/recruitment': typeof AuthenticatedRecruitmentRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/models/$modelId': typeof AuthenticatedModelsModelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/academy': typeof AuthenticatedAcademyRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/automations': typeof AuthenticatedAutomationsRoute
+  '/calendar': typeof AuthenticatedCalendarRoute
+  '/chatters': typeof AuthenticatedChattersRoute
+  '/commissions': typeof AuthenticatedCommissionsRoute
+  '/contracts': typeof AuthenticatedContractsRoute
+  '/copilot': typeof AuthenticatedCopilotRoute
   '/crm': typeof AuthenticatedCrmRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/finance': typeof AuthenticatedFinanceRoute
+  '/inbox': typeof AuthenticatedInboxRoute
+  '/managers': typeof AuthenticatedManagersRoute
   '/models': typeof AuthenticatedModelsRouteWithChildren
+  '/recruitment': typeof AuthenticatedRecruitmentRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/models/$modelId': typeof AuthenticatedModelsModelIdRoute
 }
@@ -82,9 +181,21 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/academy': typeof AuthenticatedAcademyRoute
+  '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
+  '/_authenticated/automations': typeof AuthenticatedAutomationsRoute
+  '/_authenticated/calendar': typeof AuthenticatedCalendarRoute
+  '/_authenticated/chatters': typeof AuthenticatedChattersRoute
+  '/_authenticated/commissions': typeof AuthenticatedCommissionsRoute
+  '/_authenticated/contracts': typeof AuthenticatedContractsRoute
+  '/_authenticated/copilot': typeof AuthenticatedCopilotRoute
   '/_authenticated/crm': typeof AuthenticatedCrmRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/finance': typeof AuthenticatedFinanceRoute
+  '/_authenticated/inbox': typeof AuthenticatedInboxRoute
+  '/_authenticated/managers': typeof AuthenticatedManagersRoute
   '/_authenticated/models': typeof AuthenticatedModelsRouteWithChildren
+  '/_authenticated/recruitment': typeof AuthenticatedRecruitmentRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/_authenticated/models/$modelId': typeof AuthenticatedModelsModelIdRoute
 }
@@ -93,18 +204,42 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/academy'
+    | '/analytics'
+    | '/automations'
+    | '/calendar'
+    | '/chatters'
+    | '/commissions'
+    | '/contracts'
+    | '/copilot'
     | '/crm'
     | '/dashboard'
+    | '/finance'
+    | '/inbox'
+    | '/managers'
     | '/models'
+    | '/recruitment'
     | '/admin/roles'
     | '/models/$modelId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/academy'
+    | '/analytics'
+    | '/automations'
+    | '/calendar'
+    | '/chatters'
+    | '/commissions'
+    | '/contracts'
+    | '/copilot'
     | '/crm'
     | '/dashboard'
+    | '/finance'
+    | '/inbox'
+    | '/managers'
     | '/models'
+    | '/recruitment'
     | '/admin/roles'
     | '/models/$modelId'
   id:
@@ -112,9 +247,21 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/academy'
+    | '/_authenticated/analytics'
+    | '/_authenticated/automations'
+    | '/_authenticated/calendar'
+    | '/_authenticated/chatters'
+    | '/_authenticated/commissions'
+    | '/_authenticated/contracts'
+    | '/_authenticated/copilot'
     | '/_authenticated/crm'
     | '/_authenticated/dashboard'
+    | '/_authenticated/finance'
+    | '/_authenticated/inbox'
+    | '/_authenticated/managers'
     | '/_authenticated/models'
+    | '/_authenticated/recruitment'
     | '/_authenticated/admin/roles'
     | '/_authenticated/models/$modelId'
   fileRoutesById: FileRoutesById
@@ -148,11 +295,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/recruitment': {
+      id: '/_authenticated/recruitment'
+      path: '/recruitment'
+      fullPath: '/recruitment'
+      preLoaderRoute: typeof AuthenticatedRecruitmentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/models': {
       id: '/_authenticated/models'
       path: '/models'
       fullPath: '/models'
       preLoaderRoute: typeof AuthenticatedModelsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/managers': {
+      id: '/_authenticated/managers'
+      path: '/managers'
+      fullPath: '/managers'
+      preLoaderRoute: typeof AuthenticatedManagersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inbox': {
+      id: '/_authenticated/inbox'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof AuthenticatedInboxRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/finance': {
+      id: '/_authenticated/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof AuthenticatedFinanceRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -167,6 +342,62 @@ declare module '@tanstack/react-router' {
       path: '/crm'
       fullPath: '/crm'
       preLoaderRoute: typeof AuthenticatedCrmRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/copilot': {
+      id: '/_authenticated/copilot'
+      path: '/copilot'
+      fullPath: '/copilot'
+      preLoaderRoute: typeof AuthenticatedCopilotRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/contracts': {
+      id: '/_authenticated/contracts'
+      path: '/contracts'
+      fullPath: '/contracts'
+      preLoaderRoute: typeof AuthenticatedContractsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/commissions': {
+      id: '/_authenticated/commissions'
+      path: '/commissions'
+      fullPath: '/commissions'
+      preLoaderRoute: typeof AuthenticatedCommissionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chatters': {
+      id: '/_authenticated/chatters'
+      path: '/chatters'
+      fullPath: '/chatters'
+      preLoaderRoute: typeof AuthenticatedChattersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/calendar': {
+      id: '/_authenticated/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof AuthenticatedCalendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/automations': {
+      id: '/_authenticated/automations'
+      path: '/automations'
+      fullPath: '/automations'
+      preLoaderRoute: typeof AuthenticatedAutomationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/analytics': {
+      id: '/_authenticated/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AuthenticatedAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/academy': {
+      id: '/_authenticated/academy'
+      path: '/academy'
+      fullPath: '/academy'
+      preLoaderRoute: typeof AuthenticatedAcademyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/models/$modelId': {
@@ -198,16 +429,40 @@ const AuthenticatedModelsRouteWithChildren =
   AuthenticatedModelsRoute._addFileChildren(AuthenticatedModelsRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAcademyRoute: typeof AuthenticatedAcademyRoute
+  AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
+  AuthenticatedAutomationsRoute: typeof AuthenticatedAutomationsRoute
+  AuthenticatedCalendarRoute: typeof AuthenticatedCalendarRoute
+  AuthenticatedChattersRoute: typeof AuthenticatedChattersRoute
+  AuthenticatedCommissionsRoute: typeof AuthenticatedCommissionsRoute
+  AuthenticatedContractsRoute: typeof AuthenticatedContractsRoute
+  AuthenticatedCopilotRoute: typeof AuthenticatedCopilotRoute
   AuthenticatedCrmRoute: typeof AuthenticatedCrmRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedFinanceRoute: typeof AuthenticatedFinanceRoute
+  AuthenticatedInboxRoute: typeof AuthenticatedInboxRoute
+  AuthenticatedManagersRoute: typeof AuthenticatedManagersRoute
   AuthenticatedModelsRoute: typeof AuthenticatedModelsRouteWithChildren
+  AuthenticatedRecruitmentRoute: typeof AuthenticatedRecruitmentRoute
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAcademyRoute: AuthenticatedAcademyRoute,
+  AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
+  AuthenticatedAutomationsRoute: AuthenticatedAutomationsRoute,
+  AuthenticatedCalendarRoute: AuthenticatedCalendarRoute,
+  AuthenticatedChattersRoute: AuthenticatedChattersRoute,
+  AuthenticatedCommissionsRoute: AuthenticatedCommissionsRoute,
+  AuthenticatedContractsRoute: AuthenticatedContractsRoute,
+  AuthenticatedCopilotRoute: AuthenticatedCopilotRoute,
   AuthenticatedCrmRoute: AuthenticatedCrmRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedFinanceRoute: AuthenticatedFinanceRoute,
+  AuthenticatedInboxRoute: AuthenticatedInboxRoute,
+  AuthenticatedManagersRoute: AuthenticatedManagersRoute,
   AuthenticatedModelsRoute: AuthenticatedModelsRouteWithChildren,
+  AuthenticatedRecruitmentRoute: AuthenticatedRecruitmentRoute,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
 }
 
